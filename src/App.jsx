@@ -188,7 +188,7 @@ function VideoCard({ video, isPlaying, isMuted, onTogglePlay }) {
   }, [isPlaying]);
 
   // Determine if overlay should capture click events or pass them down
-  const isIframeBase = (video.platform === 'youtube' || video.platform === 'instagram') && !video.url;
+  const isIframeBase = video.platform === 'instagram' && !video.url;
 
   return (
     <div className="video-card">
@@ -262,7 +262,7 @@ function InstagramPlayer({ instagramId }) {
         scrolling="no"
         allowTransparency="true"
         frameBorder="0"
-        sandbox="allow-scripts allow-same-origin"
+        sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
       />
       {/* Absolute masks cover header/footer redirection link areas */}
       <div className="instagram-header-mask" onClick={(e) => e.stopPropagation()} />
