@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Flame } from 'lucide-react';
-import { InstagramEmbed } from 'react-social-media-embed';
 
 // Global helper to load the YouTube IFrame API script
 let ytApiPromise = null;
@@ -252,16 +251,22 @@ function VideoCard({ video, isPlaying, isMuted, onTogglePlay }) {
   );
 }
 
-// Custom Instagram Embed Component using react-social-media-embed
+// Custom Instagram Embed Component with Overlay Masks to stop redirects
 function InstagramPlayer({ instagramId }) {
-  const embedUrl = `https://www.instagram.com/reel/${instagramId}/`;
+  const embedUrl = `https://www.instagram.com/reel/${instagramId}/embed/`;
   return (
-    <div className="instagram-iframe-wrapper" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
-      <InstagramEmbed
-        url={embedUrl}
-        width="100%"
-        captioned={false}
+    <div className="instagram-iframe-wrapper">
+      <iframe
+        src={embedUrl}
+        className="instagram-iframe"
+        scrolling="no"
+        allowTransparency="true"
+        frameBorder="0"
+        sandbox="allow-scripts allow-same-origin"
       />
+      {/* Absolute masks cover header/footer redirection link areas */}
+      <div className="instagram-header-mask" onClick={(e) => e.stopPropagation()} />
+      <div className="instagram-footer-mask" onClick={(e) => e.stopPropagation()} />
     </div>
   );
 }
